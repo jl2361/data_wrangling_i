@@ -1,0 +1,49 @@
+---
+title: "Data manipulation with `dplyr`"
+output: github_document
+---
+
+Once you've imported data, you're going to need to do some cleaning up. 
+
+```{r}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  fig.width = 6,
+  fig.asp = .6,
+  out.width = "90%"
+)
+```
+
+```{r}
+library(tidyverse)
+
+options(tibble.print_min = 3)
+
+litters_data = 
+  read_csv("data/FAS_litters.csv")
+
+litters_data = 
+janitor::clean_names(litters_data)
+
+pups_data = read_csv("data/FAS_pups.csv")
+janitor::clean_names(pups_data)
+```
+
+### `select`
+
+When you only need a subset of columns in a data tble; extracting only what you need can helpfully de-clutter.
+
+```{r}
+select(litters_data, group, litter_number, gd0_weight, pups_born_alive)
+
+select(litters_data, group:gd_of_birth)
+```
+
+You can also specify columns you'd like to remove:
+
+```{r}
+select(litters_data, -pups_survive)
+select(litters_data, -pups_survive, -group)
+```
+
+
